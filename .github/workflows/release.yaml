@@ -1,0 +1,35 @@
+name: "Release"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v1
+
+      - name: Install Helmfile
+        run: |
+          curl -fsSL -o /tmp/helmfile https://github.com/roboll/helmfile/releases/latest/download/helmfile_linux_amd64
+          chmod +x /tmp/helmfile
+          sudo mv /tmp/helmfile /usr/local/bin/helmfile
+
+      - name: Deploy Helm chart
+        run: |
+          helmfile apply --file deployments/prod/helmfile.yaml
+
+      - name: Publish Helm chart
+        uses: helm/chart-releaser-action@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          chart_glob: '*.tgz'
+          repo_name: ${{ env.REPOSITORY_NAME }}
+          chart_file_glob: 'ml-batch-0.1.0.tgz'

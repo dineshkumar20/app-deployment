@@ -1,0 +1,33 @@
+releases:
+  - name: staging-ml-api
+    labels:
+      service: ml-api
+    namespace: staging
+    chart: ../../charts/ml-api/
+    values:
+    - ../../values/staging/ml-api/values.yaml # Values file (relative path to manifest)
+    hooks:
+      - events: ["presync"]
+        showlogs: true
+        command: helm
+        args:
+          - "package"
+          - "../../charts/ml-api"
+          - "--destination"
+          - "./../../"
+  - name: staging-ml-batch
+    labels:
+      service: ml-batch
+    namespace: staging
+    chart: ../../charts/ml-batch/
+    values:
+    - ../../values/staging/ml-batch/values.yaml # Values file (relative path to manifest)
+    hooks:
+      - events: ["presync"]
+        showlogs: true
+        command: helm
+        args:
+          - "package"
+          - "../../charts/ml-batch"
+          - "--destination"
+          - "./../../"

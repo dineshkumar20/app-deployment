@@ -1,0 +1,17 @@
+# Dev specific overrides
+
+nameOverride: dev-ml-batch
+
+image:
+  repository: docker.io/dineshkumar20/mlops
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "dev"
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

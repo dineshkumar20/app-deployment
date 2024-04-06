@@ -1,0 +1,33 @@
+releases:
+  - name: prod-ml-api
+    labels:
+      service: ml-api
+    namespace: prod
+    chart: ../../charts/ml-api/
+    values:
+    - ../../values/prod/ml-api/values.yaml # Values file (relative path to manifest)
+    hooks:
+      - events: ["presync"]
+        showlogs: true
+        command: helm
+        args:
+          - "package"
+          - "../../charts/ml-api"
+          - "--destination"
+          - "./../../"
+  - name: prod-ml-batch
+    labels:
+      service: ml-batch
+    namespace: prod
+    chart: ../../charts/ml-batch/
+    values:
+    - ../../values/prod/ml-batch/values.yaml # Values file (relative path to manifest)
+    hooks:
+      - events: ["presync"]
+        showlogs: true
+        command: helm
+        args:
+          - "package"
+          - "../../charts/ml-batch"
+          - "--destination"
+          - "./../../"

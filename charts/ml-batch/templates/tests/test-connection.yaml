@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "ml-batch.fullname" . }}-test-connection"
+  labels:
+    {{- include "ml-batch.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ["/bin/sh",  "-c",  "ps -ef | grep app.py | grep -v grep | awk '{print $1}'"]
+  restartPolicy: Never

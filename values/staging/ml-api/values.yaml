@@ -1,0 +1,17 @@
+# Dev specific overrides
+
+nameOverride: staging-ml-api
+
+image:
+  repository: docker.io/dineshkumar20/mlops
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "staging"
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1500Mi
+  requests:
+    cpu: 1000m
+    memory: 1500Mi
