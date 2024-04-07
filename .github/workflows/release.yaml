@@ -27,9 +27,10 @@ jobs:
           helmfile apply --file deployments/prod/helmfile.yaml
 
       - name: Publish Helm chart
-        uses: helm/chart-releaser-action@v2
+        uses: helm/chart-releaser-action@v1.6.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           chart_glob: '*.tgz'
           repo_name: ${{ env.REPOSITORY_NAME }}
           chart_file_glob: 'ml-batch-0.1.0.tgz'
