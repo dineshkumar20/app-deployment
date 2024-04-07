@@ -19,7 +19,6 @@ jobs:
         run: |
           helmfile --version
           helm version
-          kubectl version --client
       - name: Deploy Helm chart
         run: |
           helmfile apply -f ./deployments/prod/helmfile.yaml
