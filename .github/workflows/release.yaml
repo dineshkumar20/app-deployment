@@ -25,7 +25,8 @@ jobs:
       - name: Deploy Helm chart
         run: |
           echo "Current Directory: $(pwd)"
-          helmfile apply --file deployments/prod/helmfile.yaml
+          ls
+          helmfile apply --file ./deployments/prod/helmfile.yaml
 
       - name: Publish Helm chart
         uses: helm/chart-releaser-action@v1.6.0
